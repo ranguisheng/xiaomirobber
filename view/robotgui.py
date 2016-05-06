@@ -1,5 +1,8 @@
+import sys
 from tkinter import *
 from tkinter import  messagebox
+from controller.robotlogic import ProcessLogic
+#sys.path.append("..")
 
 class Application(Frame):
     def __init__(self, master=None):
@@ -21,16 +24,20 @@ class Application(Frame):
         self.timeInput=Entry(self)
         self.timeInput.pack()
         #定义按钮
-        self.allertButton = Button(self,text='确定',command=self.hello)
+        self.allertButton = Button(self,text='确定',command=self.processParam)
         self.allertButton.pack()
         
         self.quitButton = Button(self, text='退出', command=self.quit)
         self.quitButton.pack()
-    def hello(self):
-        name=self.urlInput.get() or 'world'
-        messagebox.showinfo('Message', 'Hello,%s' % name)
-app = Application()
-# 设置窗口标题:
-app.master.title('小米抢单利器')
-# 主消息循环:
-app.mainloop()
+    def processParam(self):
+        defaultUrl="http://10.100.138.14:8383/active/toChristmasActivity.shtml?userId=100184881177"
+        urlStr=self.urlInput.get() or defaultUrl
+        messagebox.showinfo('Message', 'url is:%s' % urlStr)
+        logic = ProcessLogic()
+        logic.process(urlStr,'')
+if __name__ == '__main__':
+    app = Application()
+    # 设置窗口标题:
+    app.master.title('小米抢单利器')
+    # 主消息循环:
+    app.mainloop()
