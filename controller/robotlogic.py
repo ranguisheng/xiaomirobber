@@ -10,7 +10,14 @@ import time
 import urllib.request
 from builtins import range
 from bs4 import BeautifulSoup
+from  datetime  import  *  
+import  sys,os,time,sched  
 
+# today = datetime.date.today()
+# 第一个参数确定任务的时间，返回从某个特定的时间到现在经历的秒数 
+# 第二个参数以某种人为的方式衡量时间 
+schedule = sched.scheduler(time.time, time.sleep)
+  
 class ProcessLogic(object):
     def process(self,urlStr,timeStr):
         with Browser() as browser:
@@ -44,6 +51,15 @@ class ProcessLogic(object):
                 except Exception as e:
                     print("看起来出现了问题%s"%e)
             browser.quit()
+        print("show time after 10 seconds:") 
+        timming_exe("echo %time%", 10)
+def timming_exe(self,cmd, inc = 60): 
+    # enter用来安排某事件的发生时间，从现在起第n秒开始启动 
+    schedule.enter(inc, 0, perform_command, (cmd, inc)) 
+    # 持续运行，直到计划时间队列变成空为止 
+    schedule.run()    
+def perform_command(self,cmd, inc): 
+    os.system(cmd)
 if __name__ == '__main__':
     logic = ProcessLogic()
     logic.process('http://10.100.138.14:8383/active/toChristmasActivity.shtml?userId=100184881177','')
